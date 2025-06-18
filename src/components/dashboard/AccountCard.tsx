@@ -1,7 +1,8 @@
 
 import React from 'react';
-import { Card, CardContent, Typography, Box, IconButton } from '@mui/material';
-import { Edit, Link as LinkIcon } from '@mui/icons-material';
+import { Edit, Link as LinkIcon } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 
 interface AccountCardProps {
   title: string;
@@ -36,44 +37,44 @@ const AccountCard: React.FC<AccountCardProps> = ({
   return (
     <Card className="shadow-md hover:shadow-lg transition-shadow">
       <CardContent className="p-0">
-        <Box className={`${getCardColor()} text-white p-4 rounded-t`}>
-          <Box className="flex justify-between items-center mb-2">
-            <Typography variant="h6" className="font-semibold">
+        <div className={`${getCardColor()} text-white p-4 rounded-t`}>
+          <div className="flex justify-between items-center mb-2">
+            <h3 className="text-lg font-semibold">
               {title}
-            </Typography>
-            <Box>
-              <IconButton size="small" className="text-white">
-                <LinkIcon />
-              </IconButton>
-              <IconButton size="small" className="text-white">
-                <Edit />
-              </IconButton>
-            </Box>
-          </Box>
-          <Typography variant="h4" className="font-bold">
+            </h3>
+            <div className="flex gap-1">
+              <Button size="sm" variant="ghost" className="text-white hover:bg-white/20 p-1 h-auto">
+                <LinkIcon className="w-4 h-4" />
+              </Button>
+              <Button size="sm" variant="ghost" className="text-white hover:bg-white/20 p-1 h-auto">
+                <Edit className="w-4 h-4" />
+              </Button>
+            </div>
+          </div>
+          <div className="text-2xl font-bold">
             {bankBalance}
-          </Typography>
-          <Typography variant="body2" className="opacity-90">
+          </div>
+          <div className="text-sm opacity-90">
             BANK BALANCE
-          </Typography>
-          <Typography variant="caption" className="opacity-75">
+          </div>
+          <div className="text-xs opacity-75">
             {updatedTime}
-          </Typography>
-        </Box>
+          </div>
+        </div>
         
-        <Box className="p-4 bg-white">
-          <Typography variant="h5" className="font-bold text-gray-800">
+        <div className="p-4 bg-white">
+          <div className="text-xl font-bold text-gray-800">
             {quickbooksBalance}
-          </Typography>
-          <Typography variant="body2" className="text-gray-600 mb-2">
+          </div>
+          <div className="text-sm text-gray-600 mb-2">
             IN QUICKBOOKS
-          </Typography>
-          <Box className="flex justify-between items-center">
-            <Typography variant="h3" className="font-bold text-blue-600">
+          </div>
+          <div className="flex justify-between items-center">
+            <div className="text-3xl font-bold text-blue-600">
               {transactions}
-            </Typography>
-          </Box>
-        </Box>
+            </div>
+          </div>
+        </div>
       </CardContent>
     </Card>
   );

@@ -1,23 +1,17 @@
 
 import React, { useState } from 'react';
+import { FilterIcon, Download } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   Table,
   TableBody,
   TableCell,
-  TableContainer,
   TableHead,
+  TableHeader,
   TableRow,
-  Paper,
-  Checkbox,
-  Chip,
-  Button,
-  Box,
-  Typography,
-  IconButton,
-  Menu,
-  MenuItem
-} from '@mui/material';
-import { MoreVert, FilterList, GetApp } from '@mui/icons-material';
+} from '@/components/ui/table';
 
 interface Transaction {
   id: string;
@@ -95,38 +89,38 @@ const mockTransactions: Transaction[] = [
 
 const TransactionTable = () => {
   const [selected, setSelected] = useState<string[]>([]);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const handleSelectAll = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.checked) {
+  const handleSelectAll = (checked: boolean) => {
+    if (checked) {
       setSelected(mockTransactions.map(t => t.id));
     } else {
       setSelected([]);
     }
   };
 
-  const handleSelect = (id: string) => {
+  const handleSelect = (id: string, checked: boolean) => {
     setSelected(prev => 
-      prev.includes(id) 
-        ? prev.filter(item => item.id !== id)
-        : [...prev, id]
+      checked 
+        ? [...prev, id]
+        : prev.filter(item => item !== id)
     );
   };
 
   const getCategoryChip = (category: string, status: string) => {
     if (status === 'matched') {
       return (
-        <Chip 
-          label={category}
-          size="small"
+        <Badge 
+          variant="secondary"
           className="bg-green-100 text-green-800"
-        />
+        >
+          {category}
+        </Badge>
       );
     }
     return (
-      <Typography variant="body2" className="text-gray-600">
+      <span className="text-sm text-gray-600">
         {category}
-      </Typography>
+      </span>
     );
   };
 
@@ -135,65 +129,64 @@ const TransactionTable = () => {
   };
 
   return (
-    <Box>
-      <Box className="flex justify-between items-center mb-4">
-        <Box className="flex items-center gap-2">
+    <div>
+      <div className="flex justify-between items-center mb-4">
+        <div className="flex items-center gap-2">
           <Button
-            variant="outlined"
-            startIcon={<FilterList />}
+            variant="outline"
             className="text-gray-600 border-gray-300"
           >
+            <FilterIcon className="w-4 h-4 mr-2" />
             All dates
           </Button>
           <Button
-            variant="outlined"
-            startIcon={<FilterList />}
+            variant="outline"
             className="text-gray-600 border-gray-300"
           >
+            <FilterIcon className="w-4 h-4 mr-2" />
             All transactions (25)
           </Button>
-        </Box>
+        </div>
         
-        <Box className="flex items-center gap-2">
-          <Typography variant="body2" className="text-gray-500">
+        <div className="flex items-center gap-2">
+          <span className="text-sm text-gray-500">
             1-25 of 25
-          </Typography>
-          <IconButton size="small">
-            <GetApp />
-          </IconButton>
-        </Box>
-      </Box>
+          </span>
+          <Button size="sm" variant="ghost">
+            <Download className="w-4 h-4" />
+          </Button>
+        </div>
+      </div>
 
-      <TableContainer component={Paper} className="shadow-sm">
+      <div className="border rounded-lg">
         <Table>
-          <TableHead className="bg-gray-50">
-            <TableRow>
-              <TableCell padding="checkbox">
+          <TableHeader>
+            <TableRow className="bg-gray-50">
+              <TableHead className="w-12">
                 <Checkbox
-                  indeterminate={selected.length > 0 && selected.length < mockTransactions.length}
                   checked={selected.length === mockTransactions.length}
-                  onChange={handleSelectAll}
+                  onCheckedChange={handleSelectAll}
                 />
-              </TableCell>
-              <TableCell className="font-semibold">DATE</TableCell>
-              <TableCell className="font-semibold">DESCRIPTION</TableCell>
-              <TableCell className="font-semibold">PAYEE</TableCell>
-              <TableCell className="font-semibold">CATEGORIZE OR MATCH</TableCell>
-              <TableCell className="font-semibold text-right">SPENT</TableCell>
-              <TableCell className="font-semibold text-right">RECEIVED</TableCell>
-              <TableCell className="font-semibold">ACTION</TableCell>
+              </TableHead>
+              <TableHead className="font-semibold">DATE</TableHead>
+              <TableHead className="font-semibold">DESCRIPTION</TableHead>
+              <TableHead className="font-semibold">PAYEE</TableHead>
+              <TableHead className="font-semibold">CATEGORIZE OR MATCH</TableHead>
+              <TableHead className="font-semibold text-right">SPENT</TableHead>
+              <TableHead className="font-semibold text-right">RECEIVED</TableHead>
+              <TableHead className="font-semibold">ACTION</TableHead>
             </TableRow>
-          </TableHead>
+          </TableHeader>
           <TableBody>
             {mockTransactions.map((transaction) => (
               <TableRow 
                 key={transaction.id}
                 className="hover:bg-gray-50"
               >
-                <TableCell padding="checkbox">
+                <TableCell>
                   <Checkbox
                     checked={selected.includes(transaction.id)}
-                    onChange={() => handleSelect(transaction.id)}
+                    onCheckedChange={(checked) => handleSelect(transaction.id, checked as boolean)}
                   />
                 </TableCell>
                 <TableCell>{transaction.date}</TableCell>
@@ -210,8 +203,8 @@ const TransactionTable = () => {
                 </TableCell>
                 <TableCell>
                   <Button 
-                    variant="text" 
-                    size="small"
+                    variant="ghost" 
+                    size="sm"
                     className={transaction.status === 'matched' ? 'text-blue-600' : 'text-blue-600'}
                   >
                     {transaction.status === 'matched' ? 'View' : 'Add'}
@@ -221,8 +214,8 @@ const TransactionTable = () => {
             ))}
           </TableBody>
         </Table>
-      </TableContainer>
-    </Box>
+      </div>
+    </div>
   );
 };
 

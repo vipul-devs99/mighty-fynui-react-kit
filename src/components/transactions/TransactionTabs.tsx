@@ -1,54 +1,59 @@
 
 import React, { useState } from 'react';
-import { Tabs, Tab, Box } from '@mui/material';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const TransactionTabs = () => {
-  const [value, setValue] = useState(0);
-
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  };
+  const [value, setValue] = useState('bank');
 
   return (
-    <Box className="border-b border-gray-200 mb-6">
-      <Tabs 
-        value={value} 
-        onChange={handleChange}
-        className="min-h-0"
-        TabIndicatorProps={{
-          className: "bg-green-500 h-1"
-        }}
-      >
-        <Tab 
-          label="Bank transactions" 
-          className={`text-sm normal-case ${value === 0 ? 'text-green-600 font-semibold' : 'text-gray-600'}`}
-        />
-        <Tab 
-          label="App transactions" 
-          className={`text-sm normal-case ${value === 1 ? 'text-green-600 font-semibold' : 'text-gray-600'}`}
-        />
-        <Tab 
-          label="Receipts" 
-          className={`text-sm normal-case ${value === 2 ? 'text-green-600 font-semibold' : 'text-gray-600'}`}
-        />
-        <Tab 
-          label="Reconcile" 
-          className={`text-sm normal-case ${value === 3 ? 'text-green-600 font-semibold' : 'text-gray-600'}`}
-        />
-        <Tab 
-          label="Rules" 
-          className={`text-sm normal-case ${value === 4 ? 'text-green-600 font-semibold' : 'text-gray-600'}`}
-        />
-        <Tab 
-          label="Chart of accounts" 
-          className={`text-sm normal-case ${value === 5 ? 'text-green-600 font-semibold' : 'text-gray-600'}`}
-        />
-        <Tab 
-          label="Recurring transactions" 
-          className={`text-sm normal-case ${value === 6 ? 'text-green-600 font-semibold' : 'text-gray-600'}`}
-        />
+    <div className="border-b border-gray-200 mb-6">
+      <Tabs value={value} onValueChange={setValue} className="w-full">
+        <TabsList className="grid w-full grid-cols-7 bg-transparent h-auto p-0">
+          <TabsTrigger 
+            value="bank"
+            className="text-sm normal-case data-[state=active]:text-green-600 data-[state=active]:font-semibold data-[state=active]:border-b-2 data-[state=active]:border-green-500 data-[state=active]:bg-transparent rounded-none"
+          >
+            Bank transactions
+          </TabsTrigger>
+          <TabsTrigger 
+            value="app"
+            className="text-sm normal-case data-[state=active]:text-green-600 data-[state=active]:font-semibold data-[state=active]:border-b-2 data-[state=active]:border-green-500 data-[state=active]:bg-transparent rounded-none"
+          >
+            App transactions
+          </TabsTrigger>
+          <TabsTrigger 
+            value="receipts"
+            className="text-sm normal-case data-[state=active]:text-green-600 data-[state=active]:font-semibold data-[state=active]:border-b-2 data-[state=active]:border-green-500 data-[state=active]:bg-transparent rounded-none"
+          >
+            Receipts
+          </TabsTrigger>
+          <TabsTrigger 
+            value="reconcile"
+            className="text-sm normal-case data-[state=active]:text-green-600 data-[state=active]:font-semibold data-[state=active]:border-b-2 data-[state=active]:border-green-500 data-[state=active]:bg-transparent rounded-none"
+          >
+            Reconcile
+          </TabsTrigger>
+          <TabsTrigger 
+            value="rules"
+            className="text-sm normal-case data-[state=active]:text-green-600 data-[state=active]:font-semibold data-[state=active]:border-b-2 data-[state=active]:border-green-500 data-[state=active]:bg-transparent rounded-none"
+          >
+            Rules
+          </TabsTrigger>
+          <TabsTrigger 
+            value="accounts"
+            className="text-sm normal-case data-[state=active]:text-green-600 data-[state=active]:font-semibold data-[state=active]:border-b-2 data-[state=active]:border-green-500 data-[state=active]:bg-transparent rounded-none"
+          >
+            Chart of accounts
+          </TabsTrigger>
+          <TabsTrigger 
+            value="recurring"
+            className="text-sm normal-case data-[state=active]:text-green-600 data-[state=active]:font-semibold data-[state=active]:border-b-2 data-[state=active]:border-green-500 data-[state=active]:bg-transparent rounded-none"
+          >
+            Recurring transactions
+          </TabsTrigger>
+        </TabsList>
       </Tabs>
-    </Box>
+    </div>
   );
 };
 
